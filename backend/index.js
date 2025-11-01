@@ -1,37 +1,3 @@
-// require('dotenv').config();
-// const cors = require('cors');
-// const express = require('express');
-// const db = require('./configuration/database');  // import your MySQL connection
-// const app = express();
-
-// app.use(express.json());
-// app.use(cors());
-
-// // app.get('/events', async (req, res) => {
-// //   try {
-// //     const [rows] = await db.query('SELECT * FROM events');
-// //     res.json(rows);
-// //   } catch (err) {
-// //     res.status(500).json({ error: err.message });
-// //   }
-// // });
-
-// app.get('/', (req,res) => res.send('API running'));
-// const PORT = process.env.PORT || 5000;
-
-// app.listen(PORT, () => {
-//   console.log(`Server on ${PORT}`);
-// });
-
-
-
-
-
-
-
-
-
-
 require('dotenv').config();
 const express = require('express');
 const http = require('http');
@@ -53,7 +19,7 @@ app.use('/api/events', eventsRouter);
 app.use('/api/bookings', bookingsRouter);
 app.use('/api/auth', authRouter);
 
-// error handler
+
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ error: err.message || 'Server error' });
@@ -63,7 +29,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 const io = new Server(server, {
   cors: {
-    origin: '*', // set to frontend URL in production
+    origin: '*',
     methods: ['GET', 'POST']
   }
 });
