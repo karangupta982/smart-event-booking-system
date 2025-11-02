@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../config/axios';
 import { toast } from 'react-toastify';
+import MapPicker from '../common/MapPicker';
 
 const AdminCreateEventPage = () => {
   const navigate = useNavigate();
@@ -10,6 +11,8 @@ const AdminCreateEventPage = () => {
     description: '',
     date: '',
     location: '',
+    latitude: null,
+    longitude: null,
     totalSeats: '',
     price: '',
     imageUrl: ''
@@ -26,6 +29,8 @@ const AdminCreateEventPage = () => {
         description: formData.description,
         date: formData.date,
         location: formData.location,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
         total_seats: parseInt(formData.totalSeats),
         price: parseFloat(formData.price),
         img: formData.imageUrl || ''
@@ -88,15 +93,20 @@ const AdminCreateEventPage = () => {
                 />
               </div>
 
-              <div>
+              <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                <input
-                  type="text"
-                  value={formData.location}
-                  onChange={(e) => setFormData({...formData, location: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
-                  placeholder="City Convention Center"
-                  required
+                <MapPicker
+                  onLocationSelect={(locationData) => {
+                    setFormData({
+                      ...formData,
+                      location: locationData.address || formData.location,
+                      latitude: locationData.lat,
+                      longitude: locationData.lng
+                    });
+                  }}
+                  initialLocation={formData.location}
+                  initialLat={formData.latitude}
+                  initialLng={formData.longitude}
                 />
               </div>
             </div>
