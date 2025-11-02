@@ -29,8 +29,9 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 const io = new Server(server, {
   cors: {
-    origin: '*',
-    methods: ['GET', 'POST']
+    origin: ['https://smart-event-booking-system-eta.vercel.app','http://localhost:5173'],
+    methods: ['GET', 'POST'],
+    credentials: true
   }
 });
 eventBookingSocket(io);
