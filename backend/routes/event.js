@@ -49,7 +49,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', auth, authorizeRoles(['Admin']), async (req, res) => {
   try {
-    const { title, description, location, date, total_seats, price, img } = req.body;
+    const { title, description, location, latitude, longitude, date, total_seats, price, img } = req.body;
     
     if (!title || !date || !location || !total_seats || !price) {
       return res.status(400).json({ error: 'Missing required fields' });
@@ -57,8 +57,8 @@ router.post('/', auth, authorizeRoles(['Admin']), async (req, res) => {
     
     const available_seats = total_seats || 0;
     const [result] = await pool.query(
-      'INSERT INTO events (title, description, location, date, total_seats, available_seats, price, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [title, description, location, date, total_seats, available_seats, price, img || '']
+      'INSERT INTO events (title, description, location, latitude, longitude, date, total_seats, available_seats, price, img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [title, description, location, latitude || null, longitude || null, date, total_seats, available_seats, price, img || '']
     );
     
     const [row] = await pool.query('SELECT * FROM events WHERE id = ?', [result.insertId]);
@@ -73,7 +73,7 @@ router.post('/', auth, authorizeRoles(['Admin']), async (req, res) => {
 router.put('/:id', auth, authorizeRoles(['Admin']), async (req, res) => {
   try {
     const id = req.params.id;
-    const fields = ['title', 'description', 'location', 'date', 'total_seats', 'available_seats', 'price', 'img'];
+    const fields = ['title', 'description', 'location', 'latitude', 'longitude', 'date', 'total_seats', 'available_seats', 'price', 'img'];
     const updates = [];
     const params = [];
     
