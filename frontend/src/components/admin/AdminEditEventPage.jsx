@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import axios from '../../config/axios';
 import { toast } from 'react-toastify';
+import MapPicker from '../common/MapPicker';
 
 
 const url = import.meta.env.VITE_REACT_APP_API_URL;
@@ -38,6 +39,8 @@ const AdminEditEventPage = () => {
               description: foundEvent.description,
               date: foundEvent.date,
               location: foundEvent.location,
+              latitude: foundEvent.latitude || null,
+              longitude: foundEvent.longitude || null,
               totalSeats: foundEvent.total_seats,
               availableSeats: foundEvent.available_seats,
               price: parseFloat(foundEvent.price),
@@ -60,6 +63,8 @@ const AdminEditEventPage = () => {
     description: event?.description || '',
     date: formatDateForInput(event?.date),
     location: event?.location || '',
+    latitude: event?.latitude || null,
+    longitude: event?.longitude || null,
     totalSeats: event?.totalSeats || event?.total_seats || '',
     price: event?.price || '',
     imageUrl: event?.imageUrl || event?.img || ''
@@ -72,6 +77,8 @@ const AdminEditEventPage = () => {
         description: event.description || '',
         date: formatDateForInput(event.date),
         location: event.location || '',
+        latitude: event.latitude || null,
+        longitude: event.longitude || null,
         totalSeats: event.totalSeats || event.total_seats || '',
         price: event.price || '',
         imageUrl: event.imageUrl || event.img || ''
@@ -87,6 +94,8 @@ const AdminEditEventPage = () => {
         description: formData.description,
         date: formData.date,
         location: formData.location,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
         total_seats: parseInt(formData.totalSeats),
         available_seats: parseInt(formData.totalSeats), 
         price: parseFloat(formData.price),
@@ -168,14 +177,20 @@ const AdminEditEventPage = () => {
                 />
               </div>
 
-              <div>
+              <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                <input
-                  type="text"
-                  value={formData.location}
-                  onChange={(e) => setFormData({...formData, location: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
-                  required
+                <MapPicker
+                  onLocationSelect={(locationData) => {
+                    setFormData({
+                      ...formData,
+                      location: locationData.address || formData.location,
+                      latitude: locationData.lat,
+                      longitude: locationData.lng
+                    });
+                  }}
+                  initialLocation={formData.location}
+                  initialLat={formData.latitude}
+                  initialLng={formData.longitude}
                 />
               </div>
             </div>
