@@ -39,7 +39,7 @@ const Navbar = () => {
                 )}
                 <div className="flex items-center space-x-4">
                   <span className="text-gray-200">{user.name}</span>
-                  <button onClick={handleLogout} className="flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-all">
+                  <button onClick={handleLogout} className="flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-all cursor-pointer">
                     <LogOut className="h-4 w-4" />
                     <span>Logout</span>
                   </button>
@@ -50,7 +50,7 @@ const Navbar = () => {
                 <Link to="/login" className={`${location.pathname === '/login' ? 'text-white' : 'text-gray-200 hover:text-white'} transition-colors`}>
                   Login
                 </Link>
-                <Link to="/signup" className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-all">
+                <Link to="/signup" className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-all cursor-pointer">
                   Sign Up
                 </Link>
               </>
