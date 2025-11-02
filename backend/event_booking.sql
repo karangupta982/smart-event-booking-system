@@ -22,6 +22,8 @@ CREATE TABLE events (
   title VARCHAR(255) NOT NULL,
   description TEXT,
   location VARCHAR(255),
+  latitude DECIMAL(10,8),
+  longitude DECIMAL(11,8),
   date DATETIME NOT NULL,
   total_seats INT NOT NULL DEFAULT 0,
   available_seats INT NOT NULL DEFAULT 0,
