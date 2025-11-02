@@ -32,12 +32,21 @@ const EventCard = ({ event }) => {
         </div>
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold text-purple-600">${event.price}</span>
-          <button 
+          {event.availableSeats > 0 ? (
+            <button 
             onClick={handleViewDetails}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-all"
-          >
-            View Details
-          </button>
+              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-all"
+            >
+              View Details
+            </button>
+          ) : (
+            <button 
+              onClick={handleViewDetails}
+              className="bg-gray-400 hover:bg-gray-500 text-white px-6 py-2 rounded-lg transition-all cursor-not-allowed"
+            >
+              Sold Out
+            </button>
+          )}
         </div>
       </div>
     </div>
